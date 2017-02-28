@@ -85,3 +85,23 @@ var question_time = 8000;
 "Morality"
 "Scientific knowledge"
 "Looking pretty"
+
+"The crew of Voyager got lost 70,000 years from home in which quadrant of the Milky Way?"
+"Alpha"
+"Beta"
+"Delta"
+"Gamma"
+
+"Which Star Trek character's actress later went on to play a major character in Netflix's Orange Is The New Black?"
+"Major Kira Nerys"
+"Captain Janeway"
+"7 of 9"
+"Deanna Troi"
+
+"Starfleet is the military branch of which governmental organization?"
+"Federation of Planets"
+"United Solar Systems"
+"League of Spacefaring Civilizations"
+"The Republic"
+
+
