@@ -136,42 +136,54 @@ function makeQuestionSet(){
 			};
 		};
 	};
-	console.log(q_set)
 };
 
 // this function prints the question and its answers in the appropriate div
+// when any of the answers is clicked on, it calls displayAnswer()
 function nextQuestion(){
+	// reset all of the divs that hold question related content
 	$("#question_space").html(' ');
 	$("#answers_space").html(' ');
 	$("#question_timer").html('<p>Timer : 20 seconds remaining</p>')
+	// set the next question
 	var question = q_set[correct + incorrect + unanswered];
+	// if there's an intervalID somehow still running, clear it. This should never run,
+	// but it's a precaution to prevent bugs if someone clicks unhumanely fast
 	if (intervalID) {
 		clearTimeout(intervalID);
 	}
-	if ((correct + incorrect + unanswered) === 10) {
+	// if we've already answered 10 questions, we're going to show the results instead.
+	if ((correct + incorrect + unanswered) >= 10) {
 		showResults();
 	} else {
+		// start a new timer. This calls the showCountdown() function once ever second until
+		// intervalID is cleared
 		intervalID = setInterval("showCountdown(" + question + ")", 1000);
+		// print the question into the appropriate div
 		$("#question_space").html(data[question]["q"]);
+		// print (append) all the answers to the #answers_space div
 		for (var i = 0; i < data[question]["a"].length; i++) {
 			$("#answers_space").append('<div id="' + i + '" class="answer">' + data[question]["a"][i] + '</div>');
 		};
+		// wait for one of the answers to be clicked on, then call displayAnswer()
+		// this needs the unbind() method tacked on to it, otherwise the button stays in memory
+		// and thinks it's being clicked over and over, even after it's "deleted" from the page
 		$("#answers_space").unbind().on("click", ".answer", function(){
+			// this assignment clearly wanted us to use "this" somewhere, but I couldn't find much
+			// use for it outside of this use. It works really well here, though!
 			displayAnswer(this.id, question);
 		});
 	};
 };
 
-// this function displays the correct answer for 5 seconds
+// this function displays the correct answer for 5 seconds, then calls nextQuestion()
 function displayAnswer(answer, question) {
+	// compare the answer argument to the answer value in the object.
 	if (answer == data[question]["c"]) {
-		console.log("correct " + answer);
 		correct++;
 		$("#answers_space").html('<h3>' + "Correct!" + '</h3>');
 		$("#answers_space").append('<p>' + data[question]["e"] + '</p>');
-		console.log("total correct so far is " + correct);
 	} else {
-		console.log("wrong " + answer);
 		incorrect++;
 		$("#answers_space").html('<h3>' + "Wrong!" + '</h3>');
 		if (answer === "time expired") {
@@ -180,15 +192,24 @@ function displayAnswer(answer, question) {
 			$("#answers_space").append('<p>You answered: ' + data[question]["a"][answer] + '</p>');
 		}
 		$("#answers_space").append('<p>' + data[question]["e"] + '</p>');
-		console.log("total wrong so far is " + incorrect);
 	};
+	// cancel the timer and reset back to 20
 	clearTimeout(intervalID);
-	$("#question_timer").html(' ')
 	time = 20;
+	// clear the question from the screen
+	$("#question_timer").html(' ')
+	// only show the answer for 8 seconds, then move on to the next question
 	intervalID = setTimeout("nextQuestion()", 8000);
 };
 
+// this function is called by assigning it to the variable intervalID in the nextQuestion
+// function. That assignment calls this function repeatedly every 1 second until
+// it is cleared, which happens after 20 calls.
+// As global variable timer decreases from 20, this function displays the number of
+// remaining seconds on screen. If tje timer reaches 0, call displayAnswer() with a
+// special argument to signify that the time expired and also clear the variable that calls it.
 function showCountdown(question) {
+	// I saw this on stack overflow. You can decrement the value while also doing a comparison!
 	if (--time > 0){
 		$("#question_timer").html('<p>Timer : ' + time + ' seconds remaining</p>');
 	} else {
@@ -198,6 +219,7 @@ function showCountdown(question) {
 	};
 };
 
+// display results in #answers_space div
 function showResults() {
 	$("#question_space").html(' ');
 	$("#question_timer").html(' ');
@@ -209,6 +231,7 @@ function showResults() {
 	$("#other").html('<button id="btn-reset" class="btn btn-info">Play Again!</button>');
 };
 
+// reset back to square one
 $("#other").unbind().on("click", "#btn-reset", function(){
 	$("#question_space").html(' ');
 	$("#question_timer").html(' ');
@@ -222,7 +245,8 @@ $("#other").unbind().on("click", "#btn-reset", function(){
 	$("#splash").show()
 });
 
-// begin game
+// This starts the game. No need for an on document ready wrapper around this since
+// it only runs when the begin button is clicked.
 $("#btn-begin").click(function(){
 	$("#splash").hide()
 	makeQuestionSet();
