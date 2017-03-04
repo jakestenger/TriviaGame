@@ -184,12 +184,13 @@ function displayAnswer(answer, question) {
 		$("#answers_space").html('<h3>' + "Correct!" + '</h3>');
 		$("#answers_space").append('<p>' + data[question]["e"] + '</p>');
 	} else {
-		incorrect++;
 		$("#answers_space").html('<h3>' + "Wrong!" + '</h3>');
 		if (answer === "time expired") {
 			$("#answers_space").append('<p>Time\'s Up!</p>');
+			unanswered++;
 		} else {
 			$("#answers_space").append('<p>You answered: ' + data[question]["a"][answer] + '</p>');
+			incorrect++;
 		}
 		$("#answers_space").append('<p>' + data[question]["e"] + '</p>');
 	};
@@ -213,7 +214,6 @@ function showCountdown(question) {
 	if (--time > 0){
 		$("#question_timer").html('<p>Timer : ' + time + ' seconds remaining</p>');
 	} else {
-		unanswered++;
 		clearTimeout(intervalID);
 		displayAnswer("time expired", question);
 	};
