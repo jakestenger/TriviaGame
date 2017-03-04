@@ -82,7 +82,7 @@ var data = [
 		q: "Data, the android from Star Trek: The Next Generation, had a pet. The pet was...",
 		a: ["A cat named Spot", "An android dog named Quark", "A targarian eel named Data Jr.", "A smaller android version of himself named Datum"],
 		c: 0,
-		d: "His cat was named Spot. He wrote a poem about Spot once. It's bad. It's a bad poem."
+		e: "His cat was named Spot. He wrote a poem about Spot once. It's bad. It's a bad poem."
 	},
 	{
 		q: "Ferengi are an alien race obsessed with...",
@@ -160,10 +160,10 @@ function nextQuestion(){
 		// intervalID is cleared
 		intervalID = setInterval("showCountdown(" + question + ")", 1000);
 		// print the question into the appropriate div
-		$("#question_space").html(data[question]["q"]);
+		$("#question_space").html('<div class="question"><p>' + data[question]["q"] + '</p></div>');
 		// print (append) all the answers to the #answers_space div
 		for (var i = 0; i < data[question]["a"].length; i++) {
-			$("#answers_space").append('<div id="' + i + '" class="answer">' + data[question]["a"][i] + '</div>');
+			$("#answers_space").append('<div id="' + i + '" class="answer"><p>' + data[question]["a"][i] + '</p></div>');
 		};
 		// wait for one of the answers to be clicked on, then call displayAnswer()
 		// this needs the unbind() method tacked on to it, otherwise the button stays in memory
@@ -224,9 +224,11 @@ function showResults() {
 	$("#question_space").html(' ');
 	$("#question_timer").html(' ');
 	$("#answers_space").html('\
+		<div id="score">\
 		<p>Correct answers: ' + correct + '\
-		<p>Inorrect answers: ' + incorrect + '\
+		<p>Incorrect answers: ' + incorrect + '\
 		<p>Unanswered questions: ' + unanswered + '\
+		</div>\
 	');
 	$("#other").html('<button id="btn-reset" class="btn btn-info">Play Again!</button>');
 };

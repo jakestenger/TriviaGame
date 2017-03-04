@@ -1,6 +1,84 @@
+html
+{
+	background-color: black;
+	background: url("../images/space-1.jpg");
+	background-size: 100%;
+}
+
+body
+{
+	margin: 5% auto;
+	width: 960px;
+	height: 600px;
+	background: url("../images/lcars.png");
+	background-size: 100%;
+	background-repeat: no-repeat;
+}
+
+h1, h2, h3, p, button
+{
+	font-family: 'Exo 2', sans-serif;
+	font-family: 'Play', sans-serif;
+	color: white;
+}
+
 .answer
 {
-	border: 1px solid black;
+	border: 1px solid white;
+	background-color: grey;
 	margin-top: 5px;
+	font-size: 12px
+	line-height: 12px;
+	padding: 10px;
+}
+
+.question
+{
+	border: 1px solid white;
+	margin-top: 25px;
+	font-size: 18px;
+	font-weight: 700;
 	padding: 15px;
+}
+
+#header
+{
+	margin-top: 40px;
+}
+
+#splash
+{
+	width: 500px;
+	margin-left: 60px;
+}
+
+#game
+{
+	width: 500px;	
+}
+
+
+#question_space, #answer_space
+{
+	margin-top: 20px;
+	margin-bottom: 20px;
+	width: 100%;
+}
+
+#splash
+{
+	margin-top: 25px;
+}
+
+#header
+{
+	margin-left: 60px;
+	border-bottom: 1px grey solid;
+	width: 80%;
+}
+
+#score
+{
+	margin-top: 25px;
+	font-size: 18px;
 }
