@@ -230,7 +230,7 @@ function showResults() {
 		<p>Unanswered questions: ' + unanswered + '\
 		</div>\
 	');
-	$("#other").html('<button id="btn-reset" class="btn btn-info">Play Again!</button>');
+	$("#answers_space").append('<button id="btn-reset" class="btn btn-info">Play Again!</button>');
 };
 
 // reset back to square one
